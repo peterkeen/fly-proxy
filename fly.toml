@@ -8,6 +8,10 @@ kill_timeout = 5
 [experimental]
   private_network = "true"
 
+[[mounts]]
+  source = "cache"
+  destination = "/cache"
+
 [[services]]
   internal_port = 80
   protocol = "tcp"
