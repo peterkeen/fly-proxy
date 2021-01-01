@@ -1,3 +1,15 @@
 # Fly Proxy
 
-The intent here is to use Fly's wireguard peering to proxy http from fly to my homelab. The fly nodes will also cache in ephemeral storage. Eventually I'd like to cache in fly's provided HA redis but that involves compling nginx with the correct module.
+This sets up a simple nginx caching proxy on Fly.io. The twist is that it uses Fly's [wireguard peering](https://fly.io/blog/ipv6-wireguard-peering/) to proxy things from a server in my office.
+
+My motivation for writing this is to stop using my [diy cdn](https://github.com/peterkeen/diycdn). It was a fun learning experience but it's caused a number of headaches for me and it's a bunch of moving pieces that I don't want to have to maintain anymore.
+
+Key points
+
+* Use basic standard hand-written nginx config. Nothing generated.
+* Use Docker-provided base `nginx` image. Nothing hand-built.
+* Leverage fly.io for TLS termination and global anycast distribution
+* Use Fly's wireguard peering to connect to my home machines instead of zerotier
+* No active rails app to manage
+* No additional VPSs to manage
+* No complicated DNS setup
