@@ -15,9 +15,10 @@ RUN apk update && apk add ca-certificates iptables ip6tables && rm -rf /var/cach
 COPY --from=builder /app/proxy.conf /etc/nginx/conf.d/proxy.conf
 COPY --from=builder /app/resolv.conf /etc/resolv.conf
 COPY --from=builder /app/40-clear-cache.sh /docker-entrypoint.d
-COPY --from=builder /app/50-start-tailscale.sh /docker-entrypoint.d
+COPY --from=builder /app/start.sh /app/start.sh
 
 COPY --from=tailscale /app/tailscaled /app/tailscaled
 COPY --from=tailscale /app/tailscale /app/tailscale
 RUN mkdir -p /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
 
+ENTRYPOINT ["/app/start.sh"]

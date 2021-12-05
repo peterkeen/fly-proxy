@@ -12,3 +12,5 @@ do
     sleep 0.1
 done
 echo >&3 "$ME: info: tailscale up!"
+
+/docker-entrypoint.sh
