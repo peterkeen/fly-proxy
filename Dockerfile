@@ -1,3 +1,7 @@
+FROM alpine:latest as builder
+WORKDIR /app
+COPY . ./
+
 FROM alpine:latest as tailscale
 WORKDIR /app
 COPY . ./
@@ -6,11 +10,12 @@ RUN wget https://pkgs.tailscale.com/stable/${TSFILE} && tar xzf ${TSFILE} --stri
 COPY . ./
 
 FROM nginx:1.19.6-alpine
+COPY --from=builder /app/proxy.conf /etc/nginx/conf.d/proxy.conf
+COPY --from=builder /app/resolv.conf /etc/resolv.conf
+COPY --from=builder /app/40-clear-cache.sh /docker-entrypoint.d
+COPY --from=builder /app/50-start-tailscale.sh /docker-entrypoint.d
+
 COPY --from=tailscale /app/tailscaled /app/tailscaled
 COPY --from=tailscale /app/tailscale /app/tailscale
 RUN mkdir -p /var/run/tailscale /var/cache/tailscale /var/lib/tailscale
 
-COPY proxy.conf /etc/nginx/conf.d/proxy.conf
-COPY resolv.conf /etc/resolv.conf
-COPY 40-clear-cache.sh /docker-entrypoint.d
-COPY 50-start-tailscale.sh /docker-entrypoint.d
