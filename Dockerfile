@@ -10,6 +10,8 @@ RUN wget https://pkgs.tailscale.com/stable/${TSFILE} && tar xzf ${TSFILE} --stri
 COPY . ./
 
 FROM nginx:1.19.6-alpine
+RUN apk update && apk add ca-certificates iptables ip6tables && rm -rf /var/cache/apk/*
+
 COPY --from=builder /app/proxy.conf /etc/nginx/conf.d/proxy.conf
 COPY --from=builder /app/resolv.conf /etc/resolv.conf
 COPY --from=builder /app/40-clear-cache.sh /docker-entrypoint.d
