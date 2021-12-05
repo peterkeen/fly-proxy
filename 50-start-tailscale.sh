@@ -1,8 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-set -euxo pipefail
+set -e
 ME=$(basename $0)
-
 
 echo >&3 "$ME: info: starting tailscaled"
 
