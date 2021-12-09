@@ -1,6 +1,6 @@
 # fly.toml file generated for morning-voice-9704 on 2020-12-29T12:37:50-05:00
 
-app = "old-darkness-3533"
+app = "morning-voice-9704"
 
 kill_signal = "SIGINT"
 kill_timeout = 5
