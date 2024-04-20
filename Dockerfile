@@ -10,6 +10,3 @@ COPY --from=builder /app/resolv.conf /etc/resolv.conf
 COPY --from=builder /app/block.conf /etc/nginx/block.conf
 COPY --from=builder /app/00-start-tailscale.sh /docker-entrypoint.d
 COPY --from=builder /app/40-clear-cache.sh /docker-entrypoint.d
-COPY --from=builder /app/start.sh /app/start.sh
-
-CMD ["/app/start.sh"]
